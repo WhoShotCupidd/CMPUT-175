@@ -138,6 +138,7 @@ assert Guess("YOYOS", "BONUS").misplaced() == ""
 assert Guess("BONUS", "BONUS").misplaced() == ""
 print("OK")
 
+
 print("Checking Guess.wrong()")
 assert Guess("MOOSE", "BONUS").wrong() == "EMO"
 assert Guess("MOOSE", "BOONS").wrong() == "EM"

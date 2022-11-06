@@ -85,24 +85,20 @@ class Guess:
                 stri += "_"
         return stri
     
-    def misplaced(self):
-        """
+    def misplaced(self):     
         
-    assert Guess("MOOSE", "BONUS").misplaced() == "S"
-    assert Guess("MOOSE", "BOONS").misplaced() == "S"
-    assert Guess("YOYOS", "BOONS").misplaced() == "O"
-    assert Guess("YOYOS", "BONUS").misplaced() == ""
-    assert Guess("BONUS", "BONUS").misplaced() == ""
-
-        """        
-        
-        
+        if self.guess == self.answer:
+            return ""
+        i = 0
         wrongPos = ""
-        
-        
-        
+        for guessedLetter in self.guess:
+            if guessedLetter in self.answer and guessedLetter != self.guess[i]:
+                wrongPos += guessedLetter
+            i += 1
         
         return wrongPos
+            
+            
             
     def wrong(self):
         wrongLetters = ""
