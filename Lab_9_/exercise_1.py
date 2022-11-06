@@ -20,43 +20,44 @@ def recursive_selection_sort(data, data_len, index = 0):
 
 #---------------------------------------#
 #Implement the Recursive merge sort here
-  
+
+def merge(left, right):
+    left_index = 0
+    right_index = 0
+    merged = []
+    
+    while left_index < len(left) and right_index < len(right):
+        if left[left_index] < right[right_index]:
+            merged.append(left[left_index])
+            left_index += 1
+        else:
+            merged.append(right[right_index])
+            right_index += 1
+            
+            
+    merged += left[left_index:]
+    merged += right[right_index:]
+    return merged
+                        
+    
+
 def recursive_merge_sort(data): 
     
     # split the list in 2 halfs 
     # recursion to sort each half
     # merge the two lists
     
-    left = data[:len(data)//2]
-    right = data[len(data)//2:]
-    
-    left = recursive_merge_sort(left)
-    right = recursive_merge_sort(right)
-    
-    a_list = []
-    left_index = 0
-    right_index = 0
-    
-    while left_index < len(left) and right_index < len(right):
-        if left[left_index] <= right[right_index]:
-            a_list.append(left[left_index])
-            left_index += 1
-        else:
-            a_list.append(right[right_index])
-            right_index += 1
-            
-            
-    while left_index < len(left):
-        a_list.append(left[i])
-        
-    while right_index < len(right):
-        a_list.append(right[i])
-                
-        
+    if len(data) <= 1:
+        return data
     
     
+    half = len(data)//2
+    left = recursive_merge_sort(data[:half])
+    right = recursive_merge_sort(data[half:])
     
+    return merge(left, right)
     
+
    
     #You may use additional user_defined functions if required.
 

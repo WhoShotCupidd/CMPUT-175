@@ -86,12 +86,22 @@ class Guess:
         return stri
     
     def misplaced(self):
-        # duplicates
-        correctGuesses = self.correct()
+        """
+        
+    assert Guess("MOOSE", "BONUS").misplaced() == "S"
+    assert Guess("MOOSE", "BOONS").misplaced() == "S"
+    assert Guess("YOYOS", "BOONS").misplaced() == "O"
+    assert Guess("YOYOS", "BONUS").misplaced() == ""
+    assert Guess("BONUS", "BONUS").misplaced() == ""
+
+        """        
+        
+        
         wrongPos = ""
-        for i in range(len(self.guess)):
-            if self.guess[i] in correctGuesses and (self.guess[i] != correctGuesses[i]):
-                wrongPos += self.guess[i]
+        
+        
+        
+        
         return wrongPos
             
     def wrong(self):
