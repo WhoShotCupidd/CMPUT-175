@@ -20,26 +20,7 @@ def recursive_selection_sort(data, data_len, index = 0):
 
 #---------------------------------------#
 #Implement the Recursive merge sort here
-
-def merge(left, right):
-    left_index = 0
-    right_index = 0
-    merged = []
-    
-    while left_index < len(left) and right_index < len(right):
-        if left[left_index] < right[right_index]:
-            merged.append(left[left_index])
-            left_index += 1
-        else:
-            merged.append(right[right_index])
-            right_index += 1
-            
-            
-    merged += left[left_index:]
-    merged += right[right_index:]
-    return merged
-                        
-    
+         
 
 def recursive_merge_sort(data): 
     
@@ -47,32 +28,40 @@ def recursive_merge_sort(data):
     # recursion to sort each half
     # merge the two lists
     
-    if len(data) <= 1:
+    if len(data) < 2:
         return data
-    
-    
-    half = len(data)//2
-    left = recursive_merge_sort(data[:half])
-    right = recursive_merge_sort(data[half:])
-    
-    return merge(left, right)
-    
 
+    middle = len(data) // 2
+    left = recursive_merge_sort(data[:middle])
+    right = recursive_merge_sort(data[middle:])
+
+    left_index, right_index, data_index = 0, 0, 0
    
-    #You may use additional user_defined functions if required.
+    while left_index < len(left) and right_index < len(right):
+        if left[left_index] >= right[right_index]:
+            data[data_index] = left[left_index]
+            left_index += 1
+        else:
+            data[data_index] = right[right_index]
+            right_index += 1
+        data_index += 1
 
-    # Set the base case 
+    while left_index < len(left):
+        data[data_index] = left[left_index]
+        left_index += 1
+        data_index += 1
+
+    while right_index < len(right):
+        data[data_index] = right[right_index]
+        right_index += 1
+        data_index += 1
+        
+    return data
     
-    #Find the middle of the data list
-    
-    #Recursively calling merge sort function for both half of the data list
-    
-    # merge the two halves of the data list and return the data list
-     
-#---------------------------------------#
+
 if  __name__== "__main__":
     # Define the list of random numbers
-    random_list = [random.randint(1,1000) for i in range(500)]
+    random_list = [random.randint(1,1000) for left_index in range(500)]
     list_len = len(random_list) 
     ascending_list = sorted(random_list)
     descending_list = sorted(random_list, reverse=True)
@@ -123,8 +112,3 @@ if  __name__== "__main__":
     print('The execution time: to sort a descending list of integers in descending order.')
     print(' - Recursive selection sort: {}'.format(end_sel - start_sel))
     print(' - Recursive merge sort: {}'.format(end_merge - start_merge))    
-
-
-
-      
-
