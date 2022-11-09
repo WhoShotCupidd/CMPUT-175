@@ -7,9 +7,16 @@ import time
 # n: size of array - index is index of starting element
 def recursive_selection_sort(data, data_len, index = 0): 
   
-    # TODO-Remove pass and fill out the rest. 
-    #You may use additional user_defined functions if required.
-    pass
+    if index == data_len:
+        return data
+    
+    sorted = False
+    
+    while not sorted:
+        pass
+        
+    
+    
     # Set the base case 
           
     # Find the minimum index 
