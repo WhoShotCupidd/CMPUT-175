@@ -1,39 +1,23 @@
 import random
 import time
 
-#---------------------------------------#      
-# Implement Recursive selection sort here. 
 
-# n: size of array - index is index of starting element
 def recursive_selection_sort(data, data_len, index = 0): 
-  
-    if index == data_len:
-        return data
-    
-    sorted = False
-    
-    while not sorted:
-        pass
-        
-    
-    
-    # Set the base case 
-          
-    # Find the minimum index 
-      
-    # Swap the data 
-          
-    # Recursively calling selection sort function 
 
-#---------------------------------------#
-#Implement the Recursive merge sort here
-         
+    if index == data_len:
+        return -1
+
+    max_value = max(data[index:])
+    max_index = data.index(max_value)
+    
+    if max_index != index:
+        data[max_index], data[index] =  data[index], data[max_index]
+        
+    recursive_selection_sort(data, data_len, index + 1)
+
+            
 
 def recursive_merge_sort(data): 
-    
-    # split the list in 2 halfs 
-    # recursion to sort each half
-    # merge the two lists
     
     if len(data) < 2:
         return data
@@ -65,7 +49,7 @@ def recursive_merge_sort(data):
         
     return data
     
-
+"""
 if  __name__== "__main__":
     # Define the list of random numbers
     random_list = [random.randint(1,1000) for left_index in range(500)]
@@ -115,7 +99,8 @@ if  __name__== "__main__":
     recursive_merge_sort(descending_list)
     end_merge = time.time()
     
-    # Print the rsults execution time to sort a list of intergers already sorted in descending order 
+    # Print the results execution time to sort a list of intergers already sorted in descending order 
     print('The execution time: to sort a descending list of integers in descending order.')
     print(' - Recursive selection sort: {}'.format(end_sel - start_sel))
     print(' - Recursive merge sort: {}'.format(end_merge - start_merge))    
+"""
