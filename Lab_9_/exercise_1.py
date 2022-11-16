@@ -8,11 +8,12 @@ def recursive_selection_sort(data, data_len, index = 0):
         return -1
 
     max_value = max(data[index:])
-    max_index = data.index(max_value)
+    max_index = data[index:].index(max_value)
+    max_index += index
     
     if max_index != index:
         data[max_index], data[index] =  data[index], data[max_index]
-        
+
     recursive_selection_sort(data, data_len, index + 1)
 
             
@@ -49,7 +50,7 @@ def recursive_merge_sort(data):
         
     return data
     
-"""
+
 if  __name__== "__main__":
     # Define the list of random numbers
     random_list = [random.randint(1,1000) for left_index in range(500)]
@@ -103,4 +104,3 @@ if  __name__== "__main__":
     print('The execution time: to sort a descending list of integers in descending order.')
     print(' - Recursive selection sort: {}'.format(end_sel - start_sel))
     print(' - Recursive merge sort: {}'.format(end_merge - start_merge))    
-"""
