@@ -107,8 +107,14 @@ def preorder(tree):
  
     Returns: None
     '''  
-    #TODO delete pass and write your code
-    pass
+    if tree != None:
+        print(tree.getKey())
+        preorder(tree.getLeft())
+        preorder(tree.getRight())
+        
+        
+        
+        
         
 def inorder(tree):
     '''
@@ -118,8 +124,15 @@ def inorder(tree):
  
     Returns: None
     '''  
-    #TODO delete pass and write your code
-    pass
+    
+    if tree != None:
+        inorder(tree.getLeft())
+        print(tree.getKey())
+        inorder(tree.getRight())
+
+
+
+
 
 def postorder(tree):
     '''
@@ -129,8 +142,13 @@ def postorder(tree):
  
     Returns: None
     '''       
-    #TODO delete pass and write your code
-    pass
+    
+    if tree != None:
+        postorder(tree.getLeft())
+        postorder(tree.getRight())
+        print(tree.getKey())
+        
+        
         
 ################################################################################
 ##  EXERCISE 2
@@ -144,8 +162,21 @@ def findMinKey(tree):
  
     Returns: None if tree is None, otherwise a number
     '''       
-    #TODO delete pass and write your code
-    pass
+    if tree == None:
+        return float("inf")
+    
+    rootValue = tree.getKey()
+    leftValue = findMinKey(tree.getLeft())
+    rightValue = findMinKey(tree.getRight())
+    
+    if leftValue < rootValue:
+        rootValue = leftValue
+    if rightValue < rootValue:
+        rootValue = rightValue
+        
+    return rootValue
+
+
 
 def findMaxKey(tree):
     '''
@@ -155,8 +186,23 @@ def findMaxKey(tree):
  
     Returns: None if tree is None, otherwise a number
     '''       
-    #TODO delete pass and write your code
-    pass
+    
+    if tree == None:
+        return float("-inf")
+    
+    rootValue = tree.getKey()
+    leftValue = findMaxKey(tree.getLeft())
+    rightValue = findMaxKey(tree.getRight())
+    
+    if leftValue > rootValue:
+        rootValue = leftValue
+    if rightValue > rootValue:
+        rootValue = rightValue
+    
+    return rootValue        
+    
+
+
 
 
 ################################################################################
@@ -173,8 +219,18 @@ def buildTree(inOrder, preOrder):
     Returns: a BinaryTree object
     '''  
     
-    #TODO delete pass and write your code
-    pass
+    if len(inOrder) == 1:
+        return BinaryTree(inOrder[0])
+    
+
+    rootValue = (preOrder[0])
+    rootIndex = inOrder.index(rootValue)
+    
+    tree = BinaryTree(preOrder[0])
+    tree.setLeft(buildTree())
+    tree.setRight(buildTree())
+    
+    return tree
 
     #base case:
 

@@ -140,6 +140,7 @@ print("OK")
 
 
 print("Checking Guess.wrong()")
+print(Guess("MOOSE", "BONUS").wrong())
 assert Guess("MOOSE", "BONUS").wrong() == "EMO"
 assert Guess("MOOSE", "BOONS").wrong() == "EM"
 assert Guess("YOYOS", "BOONS").wrong() == "YY"

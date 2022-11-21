@@ -76,6 +76,7 @@ class Guess:
     def guess(self):
         return self.guess
     
+    
     def correct(self):
         stri = ""
         for i in range(len(self.guess)):
@@ -87,25 +88,34 @@ class Guess:
     
     def misplaced(self):     
         
+
         if self.guess == self.answer:
             return ""
-        i = 0
+
         wrongPos = ""
-        for guessedLetter in self.guess:
-            if guessedLetter in self.answer and guessedLetter != self.guess[i]:
-                wrongPos += guessedLetter
-            i += 1
+        correct = self.correct()
+        i = 0
         
+        for guessLetter in self.guess:
+            if (guessLetter not in correct and guessLetter in self.answer) or (self.guess.count(guessLetter) == self.answer.count(guessLetter) and correct[i] == "_" ):
+                wrongPos += guessLetter
+            i += 1
+                
         return wrongPos
-            
-            
+
             
     def wrong(self):
+        
         wrongLetters = ""
+        i = 0
+        correct = self.correct()
+        
         for guessLetter in self.guess:
-            if guessLetter not in self.answer:
+            if (guessLetter not in self.answer) or (self.guess.count(guessLetter) != self.answer.count(guessLetter) and correct[i] == "_"):
                 wrongLetters += guessLetter
-        return wrongLetters
+            i += 1    
+            
+        return "".join(sorted(wrongLetters))
     
     def is_win(self):
         if self.guess == self.answer:
