@@ -221,27 +221,21 @@ def buildTree(inOrder, preOrder):
     
     if len(inOrder) == 1:
         return BinaryTree(inOrder[0])
-    
+    else:
+        rootValue = preOrder[0]
+        rootIndex = inOrder.index(rootValue)
+        
+        
+        #build the tree recursively
+        leftInorder = inOrder[:rootIndex]
+        rightInorder = inOrder[rootIndex + 1:]
+        leftPreorder = preOrder[1:len(leftInorder) + 1]
+        rightPreorder = preOrder[len(leftInorder) + 1:]
+        tree = BinaryTree(preOrder[0])
+        tree.setLeft(buildTree(leftInorder, leftPreorder))
+        tree.setRight(buildTree(rightInorder, rightPreorder)) 
+        return tree
 
-    rootValue = (preOrder[0])
-    rootIndex = inOrder.index(rootValue)
-    
-    tree = BinaryTree(preOrder[0])
-    tree.setLeft(buildTree())
-    tree.setRight(buildTree())
-    
-    return tree
-
-    #base case:
-
-    
-    #get the root value
-
-    
-    #find the index of root value in Inorder traversal
-
-    
-    #build the tree recursively
 
 ################################################################################
 ##  Test your functions: you are encouraged to add other tests as well
