@@ -13,7 +13,7 @@ class ConsolePlayer:
     '''
     def ask_play_again(self):
         '''
-        Returns True if the player would like to play again, otherwise
+        Returns True if the would like to play again, otherwise
         it returns False.
         '''
         while True:

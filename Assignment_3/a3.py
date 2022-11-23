@@ -1,4 +1,5 @@
-
+from importlib import invalidate_caches
+from importlib import import_module
 
 
 def write_py(name, parameters, statements):
@@ -16,4 +17,21 @@ def write_py(name, parameters, statements):
         for i in range(0, len(statements)):
             f.write("   " + statements[i] + "\n") 
         
-write_py("add", ["a", "b"], ["r = a + b", "return r"])
+
+
+def main():
+    write_py("add", ["a", "b"], ["r = a + b", "return r"])
+    add = load_function("add")
+    assert add(1, 2) == 3
+    
+    
+    
+    
+# Task 2
+
+def fixed_bubble(size):
+    pass
+
+
+
+# Task 3

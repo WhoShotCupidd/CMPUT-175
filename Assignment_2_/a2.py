@@ -138,12 +138,14 @@ class NotLettersError(ValueError):
 
 class Wordle:
     def __init__(self,words):
-        self.words = words
+        self.random_word = choice(list(words._words))
+        self._guessesmade = 0
         
     def guesses(self):
-        pass
+        return self._guessesmade
     
     def guess(self, guessed):
-        pass
+        self._guessesmade += 1
+        return Guess(guessed, self.random_word)
         
     
