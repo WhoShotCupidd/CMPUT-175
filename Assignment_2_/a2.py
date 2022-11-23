@@ -69,19 +69,19 @@ class WordleWords(MutableSet):
 
 
 class Guess:
-    def __init__(self, guess, answer):
-        self.guess = guess
+    def __init__(self, _guess, answer):
+        self._guess = _guess
         self.answer = answer
 
     def guess(self):
-        return self.guess
+        return self._guess
     
     
     def correct(self):
         stri = ""
-        for i in range(len(self.guess)):
-            if self.guess[i] == self.answer[i]:
-                stri += self.guess[i]
+        for i in range(len(self._guess)):
+            if self._guess[i] == self.answer[i]:
+                stri += self._guess[i]
             else:
                 stri += "_"
         return stri
@@ -89,15 +89,15 @@ class Guess:
     def misplaced(self):     
         
 
-        if self.guess == self.answer:
+        if self._guess == self.answer:
             return ""
 
         wrongPos = ""
         correct = self.correct()
         i = 0
         
-        for guessLetter in self.guess:
-            if (guessLetter not in correct and guessLetter in self.answer) or (self.guess.count(guessLetter) == self.answer.count(guessLetter) and correct[i] == "_" ):
+        for guessLetter in self._guess:
+            if (guessLetter not in correct and guessLetter in self.answer) or (self._guess.count(guessLetter) == self.answer.count(guessLetter) and correct[i] == "_" ):
                 wrongPos += guessLetter
             i += 1
                 
@@ -110,16 +110,18 @@ class Guess:
         i = 0
         correct = self.correct()
         
-        for guessLetter in self.guess:
-            if (guessLetter not in self.answer) or (self.guess.count(guessLetter) != self.answer.count(guessLetter) and correct[i] == "_"):
+        for guessLetter in self._guess:
+            if (guessLetter not in self.answer) or (self._guess.count(guessLetter) != self.answer.count(guessLetter) and correct[i] == "_"):
                 wrongLetters += guessLetter
             i += 1    
             
         return "".join(sorted(wrongLetters))
     
     def is_win(self):
-        if self.guess == self.answer:
+        if self._guess == self.answer:
             return True
+        else:
+            return False
     
 
 
@@ -136,5 +138,12 @@ class NotLettersError(ValueError):
 
 class Wordle:
     def __init__(self,words):
+        self.words = words
+        
+    def guesses(self):
         pass
+    
+    def guess(self, guessed):
+        pass
+        
     
