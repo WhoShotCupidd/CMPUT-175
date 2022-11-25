@@ -1,17 +1,17 @@
 #----------------------------------------------------
 # Lab 8: recursion
-# Purpose of program: have some fun with recursion
+# Purpose of program: create a wordle game
 #
 # Author: Christiaan Venter
 # ccid: clventer
 # 1707325
 #----------------------------------------------------
 
-#
+# Imports used
 from random import choice
 from collections.abc import MutableSet
 
-#
+# Class containing all possible words for the game or wordle
 class WordleWords(MutableSet):
 
     def __init__(self, letters):
@@ -19,21 +19,49 @@ class WordleWords(MutableSet):
         self.letters = letters
     
     def __contains__(self, word):
+        """sees if _words contains given word 
+
+        Args:
+            word (str): word to check if in list 
+
+        Returns:
+            bool: false or true wether in list or not
+        """
         return word in self._words
     
     def __iter__(self): 
         return iter(self._words)
     
     def __len__(self):
+        """returns the amount of words 
+
+        Returns:
+            int: integer description of amount of words 
+        """
         return len(self._words)
     
     def add(self, word):
+        """adds word to list 
+
+        Args:
+            word (str): word to add
+        """
         self._words.add(word)
         
     def discard(self, word):
+        """removes word from list
+
+        Args:
+            word (str): word to remove 
+        """
         self._words.remove(word)
         
     def load_file(self, filename):
+        """find load given file and make a list with all possible words 
+
+        Args:
+            filename (str): name of file to make word list with
+        """
         file = open(filename,"r")
         for lines in file.readlines():
             line = lines.rstrip("\n")
@@ -42,6 +70,16 @@ class WordleWords(MutableSet):
             
     
     def check_word(self, word):
+        """checks word and sees if it is all caps and if it is too long or short 
+
+        Args:
+            word (str): word we wish to check 
+
+        Raises:
+            NotLettersError: if word contains any string not contained within ALPHABET constant
+            TooLongError: raised if word is longer than letters
+            TooShortError: raised if word is shorter than letters 
+        """
         ALPHABET = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
         
         for letter in word:
@@ -55,14 +93,24 @@ class WordleWords(MutableSet):
             raise TooShortError
     
     def letters(self):
-        pass
+        """getter for amount of letters
+
+        Returns:
+            int: amount of letter
+        """
+        return self.letters
     
     def copy(self):
+        """creates an identical copy to current wordlewords class
+
+        Returns:
+            WordleWords: class containing identical values
+        """
         copy = WordleWords(self.letters)
         copy._words = set(self._words)
         return copy
         
-
+# Class used to check guesses
 class Guess:
     def __init__(self, _guess, answer):
         self._guess = _guess
@@ -132,10 +180,11 @@ class Guess:
         else:
             return False
     
-
+# used to play the game of wordle
 class Wordle:
     def __init__(self,words):
         self.random_word = choice(list(words._words))
+        #words.discard(self.random_word)
         self._guessesmade = 0
         
     def guesses(self):
@@ -158,7 +207,7 @@ class Wordle:
         self._guessesmade += 1
         return Guess(guessed, self.random_word)
         
-    
+# all error classes used 
 class TooShortError(ValueError):
     pass
 
