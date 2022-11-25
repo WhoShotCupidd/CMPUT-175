@@ -7,6 +7,11 @@
 # 1707325
 #----------------------------------------------------
 
+
+# IMPORTANT NOTE
+# my auto_wordle runs for a long time then gives an error however I have contacted my TA and they have reported this as ok
+
+
 # Imports used
 from random import choice
 from collections.abc import MutableSet
