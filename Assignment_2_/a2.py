@@ -63,21 +63,25 @@ class WordleWords(MutableSet):
         return copy
         
 
-
-
-
-
-
 class Guess:
     def __init__(self, _guess, answer):
         self._guess = _guess
         self.answer = answer
 
     def guess(self):
+        """getter for the guess made
+
+        Returns:
+            str: the guess made
+        """
         return self._guess
     
-    
     def correct(self):
+        """returns all correctly guessed letters in the right position
+
+        Returns:
+            str: all the correct letters formated correctly 
+        """
         stri = ""
         for i in range(len(self._guess)):
             if self._guess[i] == self.answer[i]:
@@ -87,25 +91,25 @@ class Guess:
         return stri
     
     def misplaced(self):     
-        
+        """returns all letters that were guessed but not in the right position
 
-        if self._guess == self.answer:
-            return ""
-
+        Returns:
+            str: all mislaced letters
+        """
         wrongPos = ""
-        correct = self.correct()
-        i = 0
         
-        for guessLetter in self._guess:
-            if (guessLetter not in correct and guessLetter in self.answer) or (self._guess.count(guessLetter) == self.answer.count(guessLetter) and correct[i] == "_" ):
-                wrongPos += guessLetter
-            i += 1
+        for i in range(len(self._guess)):
+            if self.answer[i] in self._guess and self.answer[i] != self._guess[i]:
+                wrongPos += self.answer[i]
                 
-        return wrongPos
+        return ''.join(sorted(wrongPos))
 
-            
     def wrong(self):
-        
+        """returns a string with all the wrong letters
+
+        Returns:
+            str: all incorrect answers
+        """
         wrongLetters = ""
         i = 0
         correct = self.correct()
@@ -118,23 +122,16 @@ class Guess:
         return "".join(sorted(wrongLetters))
     
     def is_win(self):
+        """returns wether or not answer is the same as guess
+
+        Returns:
+            bool: wether similar or incorrect 
+        """
         if self._guess == self.answer:
             return True
         else:
             return False
     
-
-
-class TooShortError(ValueError):
-    pass
-
-class TooLongError(ValueError):
-    pass
-
-class NotLettersError(ValueError):
-    pass
-
-
 
 class Wordle:
     def __init__(self,words):
@@ -142,10 +139,33 @@ class Wordle:
         self._guessesmade = 0
         
     def guesses(self):
+        """getter function for the amount of guesses made
+
+        Returns:
+            int: amount of guesses
+        """
         return self._guessesmade
     
     def guess(self, guessed):
+        """returns a guess object and adds one to the guesses made
+
+        Args:
+            guessed (str): guess the user made
+
+        Returns:
+            Guess: guess object with guess made
+        """
         self._guessesmade += 1
         return Guess(guessed, self.random_word)
         
     
+class TooShortError(ValueError):
+    pass
+
+
+class TooLongError(ValueError):
+    pass
+
+
+class NotLettersError(ValueError):
+    pass
