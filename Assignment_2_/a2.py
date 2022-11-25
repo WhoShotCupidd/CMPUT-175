@@ -1,5 +1,5 @@
 #----------------------------------------------------
-# Lab 8: recursion
+# Assignment 2
 # Purpose of program: create a wordle game
 #
 # Author: Christiaan Venter
