@@ -10,10 +10,9 @@ def write_py(name, parameters, statements):
         parameters (list): all parameters for function in the file
         statements (list): all code inside the function
     """
-    
     assert name != 'a3'
     
-    params = str([param for param in parameters])
+    params = str(parameters)
     params = params.replace("[", "").replace("]", "").replace("'", "")
     
     with open(name + ".py", 'w') as f:
@@ -64,7 +63,7 @@ def fixed_bubble(size):
         
         intial = 0
         for i in range(iterate_length):
-            statements.append("if alist[" + str(intial) + "] > alist[" + str(intial + 1) + "]:") # now need to add swap
+            statements.append("if alist[" + str(intial) + "] > alist[" + str(intial + 1) + "]:")
             statements.append(f" alist[{intial}], alist[{intial + 1}] = alist[{intial + 1}], alist[{intial}]")
             intial += 1
         
@@ -80,8 +79,7 @@ def fixed_bubble(size):
           
           
           
-          
-            
+                  
 # Task 3 #
 def flip(symbol):
     """will flip a greater than or less than symbol
@@ -107,12 +105,9 @@ def greatest_power_of_two_less_than(number):
     Returns:
         int: the greatest_power_of_two_less_than
     """
-    
-    print(number)
     if number == 1 or number == 2:
-        return -1
+        return 1
 
-    
     start = 1
     
     while start * 2 < number:
@@ -120,49 +115,65 @@ def greatest_power_of_two_less_than(number):
         
     return start
         
-        
-        
-        
 
-# Correct
 def bitonic(a_list):
-    
-    bitonicSort(a_list, 0, len(a_list) - 1, ">")
+    """Will begin the bitonic sort with correct ending and starting values
+
+    Args:
+        a_list (list): list to bitonicly sort
+    """
+    bitonicSort(a_list, 0, len(a_list), ">")
 
 
-
-# Check
 def CompareThenSwap(a_list, a, b, direction):
-    if (direction == "<" and a_list[a] > a_list[b]) or (direction == ">" and a_list[a] < a_list[b]):
+    """function I implememted to compare two indexes and depending on value and direction do the correct comparison and swap
+
+    Args:
+        a_list (list): list holding values to compare
+        a (int): first value index
+        b (int): second value index
+        direction (str): direction to compare and swap as it changes if we swap or not
+    """
+    if (direction == ">" and a_list[a] > a_list[b]) or (direction == "<" and a_list[a] < a_list[b]):
         a_list[a], a_list[b] =  a_list[b],  a_list[a]
 
 
-# Check
 def bitonicSort(a_list, start, end, direction):
-    
-    
-    # problem here
-    if end - start == 1 or start - end == 1:
+    """Will sort a list with bitonic sorting
+
+    Args:
+        a_list (list): list to sort
+        start (int): where to begin sorting
+        end (int): where to end sorting
+        direction (str): direction of bitonic sort
+    """
+    if end - start <= 1:
         return
     
-    middle = (end - start) // 2
+    middle = (end + start) // 2
     
     bitonicSort(a_list, start, middle, direction)
     bitonicSort(a_list, middle, end, flip(direction))
     bitonicMerge(a_list, start, end, direction)
         
 
-# Check
 def bitonicMerge(a_list, start, end, direction):
-    
-    if end - start == 1:
+    """Will merge two bitonic lists into one
+
+    Args:
+        a_list (list): list to merge
+        start (int): starting index of the list
+        end (int): ending index of the list to merge
+        direction (str): direction to merge the list
+    """
+    if end - start <= 1:
         return
 
-    distance = greatest_power_of_two_less_than(start - end)
+    distance = greatest_power_of_two_less_than(end - start)
     
     middle = end - distance
     
-    for i in range(start, start + middle):
+    for i in range(start, middle):
         CompareThenSwap(a_list, i, i + distance, direction)
             
     bitonicMerge(a_list, start, middle, direction)
@@ -182,41 +193,67 @@ def bitonicMerge(a_list, start, end, direction):
 def fixed_bitonic(size):
     
     statements = []
-    #iterate_length = size - 1
     
-    
-    
-
-    """
-    statements = []
-    iterate_length = size - 1
-    for i in range(size - 1):
-        
-        intial = 0
-        for i in range(iterate_length):
-            statements.append("if alist[" + str(intial) + "] > alist[" + str(intial + 1) + "]:") # now need to add swap
-            statements.append(f" alist[{intial}], alist[{intial + 1}] = alist[{intial + 1}], alist[{intial}]")
-            intial += 1
-        
-        iterate_length -= 1
-        intial = 0
+    fixedBitonicSort(0, size, ">", statements)
     statements.append("return alist")
-        
-        
-    write_py("bubble" + str(size), ["alist"], statements)
-    """
+    write_py("bitonic"+ str(size), "[alist]", statements)
+    
+    
+def fixedBitonicSort(start, end, direction, statements):
+    
+    if end - start <= 1:
+        return
+    
+    middle = (end + start) // 2
+    
+    fixedBitonicSort(start, middle, direction, statements)
+    fixedBitonicSort(middle, end, flip(direction), statements)
+    fixedBitonicMerge(start, end, direction, statements)
+
+
+def fixedBitonicMerge(start, end, direction, statements):
+    
+    if end - start <= 1:
+        return
+
+    distance = greatest_power_of_two_less_than(end - start)
+    
+    middle = end - distance
+    
+    for i in range(start, middle):
+        # change this
+        fixedCompareThenSwap(i, i + distance, direction, statements)
+            
+    fixedBitonicMerge(start, middle, direction, statements)
+    fixedBitonicMerge(middle, end, direction, statements)
+
+
+def fixedCompareThenSwap(a, b, direction, statements):
+    
+    if direction == ">":
+        statements.append("if alist[" + str(a) + "] > alist[" + str(b) + "]:")
+        statements.append(f"    alist[{a}], alist[{b }] = alist[{b}], alist[{a}]")
+    
+    if direction == "<":
+        statements.append("if alist[" + str(a) + "] < alist[" + str(b) + "]:")
+        statements.append(f"    alist[{a}], alist[{b}] = alist[{b}], alist[{a}]")
 
 
 
 
 # Main
 def main():
+    """
     write_py("divide", ["a", "b"], ["r = a // b", "return r"])
     divide = load_function("divide")
     assert divide(3, 1) == 3
     fixed_bubble(4)
     a_list = [1,4,2,8,3]
     bitonic(a_list)
+    print(a_list)
+    """
+    fixed_bitonic(5)
+    
 
 # call on main function
 if __name__ == "__main__":
