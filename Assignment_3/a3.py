@@ -1,5 +1,16 @@
+#----------------------------------------------------
+# Assignment 3
+# Purpose of program: metaprogramming and sorting
+#
+# Author: Christiaan Venter
+# ccid: clventer
+# 1707325
+#----------------------------------------------------
+
 from importlib import invalidate_caches
 from importlib import import_module
+
+
 
 # Task 1 #
 def write_py(name, parameters, statements):
@@ -41,12 +52,6 @@ def load_function(name):
 
 
 
-
-
-
-
-
-
 # Task 2 #
 def fixed_bubble(size):
     """will output a file that will bubble sort for a certain size
@@ -74,12 +79,7 @@ def fixed_bubble(size):
     write_py("bubble" + str(size), ["alist"], statements)
           
           
-          
-          
-          
-          
-          
-                  
+                          
 # Task 3 #
 def flip(symbol):
     """will flip a greater than or less than symbol
@@ -181,26 +181,31 @@ def bitonicMerge(a_list, start, end, direction):
 
 
 
-
-
-
-
-
-
-
-
 # Task 4 #
 def fixed_bitonic(size):
-    
+    """identical to bitonic above however creates a statement list instead of actually sorting
+
+    Args:
+        size (int): size of list to make a sort file for
+
+    Returns:
+        file: .py file that will sort that size of list bitoniclly
+    """
     statements = []
-    
     fixedBitonicSort(0, size, ">", statements)
     statements.append("return alist")
     write_py("bitonic"+ str(size), "[alist]", statements)
     
     
 def fixedBitonicSort(start, end, direction, statements):
-    
+    """identical to bitonic sort however calls on fixed versions of sort and merge
+
+    Args:
+        start (int): start of list
+        end (int): end of list to sort
+        direction (str): direction sorting will occur
+        statements (list): collection of all statements to occur in output file
+    """
     if end - start <= 1:
         return
     
@@ -212,7 +217,14 @@ def fixedBitonicSort(start, end, direction, statements):
 
 
 def fixedBitonicMerge(start, end, direction, statements):
-    
+    """identical to bitonic merge however calls on fixed versions of merge and compare and swap
+
+    Args:
+        start (int): start of list
+        end (int): end of list to sort
+        direction (str): direction to sort in
+        statements (list): collection of statements for output file
+    """
     if end - start <= 1:
         return
 
@@ -221,7 +233,6 @@ def fixedBitonicMerge(start, end, direction, statements):
     middle = end - distance
     
     for i in range(start, middle):
-        # change this
         fixedCompareThenSwap(i, i + distance, direction, statements)
             
     fixedBitonicMerge(start, middle, direction, statements)
@@ -229,7 +240,14 @@ def fixedBitonicMerge(start, end, direction, statements):
 
 
 def fixedCompareThenSwap(a, b, direction, statements):
-    
+    """where all the magic happens and instead of actually performing a swap it will append to statements what it would have done
+
+    Args:
+        a (int): first index of the list
+        b (int): second index of the list
+        direction (str): direction to sort in
+        statements (list): collection of all statements for output file
+    """
     if direction == ">":
         statements.append("if alist[" + str(a) + "] > alist[" + str(b) + "]:")
         statements.append(f"    alist[{a}], alist[{b }] = alist[{b}], alist[{a}]")
@@ -237,24 +255,5 @@ def fixedCompareThenSwap(a, b, direction, statements):
     if direction == "<":
         statements.append("if alist[" + str(a) + "] < alist[" + str(b) + "]:")
         statements.append(f"    alist[{a}], alist[{b}] = alist[{b}], alist[{a}]")
-
-
-
-
-# Main
-def main():
-    """
-    write_py("divide", ["a", "b"], ["r = a // b", "return r"])
-    divide = load_function("divide")
-    assert divide(3, 1) == 3
-    fixed_bubble(4)
-    a_list = [1,4,2,8,3]
-    bitonic(a_list)
-    print(a_list)
-    """
-    fixed_bitonic(5)
-    
-
-# call on main function
-if __name__ == "__main__":
-    main()
+        
+# Hope you have a great winter break! 
